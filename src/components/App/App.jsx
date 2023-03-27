@@ -19,7 +19,7 @@ export default function App() {
   const [images, setImages] = useState([]);
   const [status, setStatus] = useState(STATUS.IDLE);
   const [totalHits, setTotalHits] = useState(0);
-  const [error, setError] = useState(null);
+  // const [error, setError] = useState(null);
   const [page, setPage] = useState(1);
 
   useEffect(() => {
@@ -34,13 +34,13 @@ export default function App() {
             setTotalHits(totalHits);
             Notify.success(`We found ${totalHits} images`);
           } else {
-            setStatus(STATUS.REJECTED);
+            // setStatus(STATUS.REJECTED);
             Notify.failure('There are no images by this query');
           }
         })
         .catch(error => {
-          setStatus(STATUS.REJECTED);
-          setError(error.message);
+          // setStatus(STATUS.REJECTED);
+          // setError(error.message);
           Notify.failure('There are no images by this query');
         });
     }
