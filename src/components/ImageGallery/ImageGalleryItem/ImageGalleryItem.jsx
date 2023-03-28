@@ -1,35 +1,25 @@
 import { ImageCard } from './ImageGalleryItem.styled';
-import { Component } from 'react';
+import { useState } from 'react';
 import Modal from 'components/Modal/Modal';
 
-class ImageGalleryItem extends Component {
-  state = {
-    showModal: false,
-  };
+const ImageGalleryItem = ({ webformatURL, largeImageURL, tags }) => {
+  const [showModal, setShowModal] = useState(false);
 
-  handleItemClick = e => {
-    this.setState({ showModal: true });
-  };
+  const handleItemClick = e => setShowModal(true);
 
-  closeModal = () => {
-    this.setState({ showModal: false });
-  };
+  const closeModal = () => setShowModal(false);
 
-  render() {
-    const { webformatURL, largeImageURL, tags } = this.props;
+  return (
+    <>
+      <ImageCard onClick={handleItemClick}>
+        <img src={webformatURL} alt={tags} />
+      </ImageCard>
 
-    return (
-      <>
-        <ImageCard onClick={this.handleItemClick}>
-          <img src={webformatURL} alt={tags} />
-        </ImageCard>
-
-        {this.state.showModal && (
-          <Modal src={largeImageURL} tags={tags} closeModal={this.closeModal} />
-        )}
-      </>
-    );
-  }
-}
+      {showModal && (
+        <Modal src={largeImageURL} tags={tags} closeModal={closeModal} />
+      )}
+    </>
+  );
+};
 
 export default ImageGalleryItem;
