@@ -29,7 +29,10 @@ export default function App() {
         .then(res => {
           const { hits, totalHits } = res.data;
           if (hits.length !== 0) {
-            setImages(prev => [...prev, ...hits]);
+            setImages(prev => {
+              console.log(query);
+              return [...prev, ...hits];
+            });
             setStatus(STATUS.RESOLVED);
             setTotalHits(totalHits);
             Notify.success(`We found ${totalHits} images`);

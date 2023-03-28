@@ -3,19 +3,19 @@ import { useState } from 'react';
 import Modal from 'components/Modal/Modal';
 
 const ImageGalleryItem = ({ webformatURL, largeImageURL, tags }) => {
-  const [showModal, setShowModal] = useState(false);
+  const [isShowModal, setIsShowModal] = useState(false);
 
-  const handleItemClick = e => setShowModal(true);
+  const showModal = e => setIsShowModal(true);
 
-  const closeModal = () => setShowModal(false);
+  const closeModal = () => setIsShowModal(false);
 
   return (
     <>
-      <ImageCard onClick={handleItemClick}>
+      <ImageCard onClick={showModal}>
         <img src={webformatURL} alt={tags} />
       </ImageCard>
 
-      {showModal && (
+      {isShowModal && (
         <Modal src={largeImageURL} tags={tags} closeModal={closeModal} />
       )}
     </>
