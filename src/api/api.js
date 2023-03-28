@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Notify } from 'notiflix';
 
 const ENDPOINT = `https://pixabay.com/api/`;
 const API_KEY = `33603912-7e8ee717ebd011b2a3cf395f5`;
@@ -25,5 +26,7 @@ export const getImages = async (query, page) => {
     return response;
   } catch (error) {
     console.log(error);
+    Notify.failure('Oops, something went wrong');
+    Promise.reject();
   }
 };
