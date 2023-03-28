@@ -25,7 +25,7 @@ export default function App() {
         setImages(prev => [...prev, ...hits]);
         setIsLoading(false);
         setTotalHits(totalHits);
-        Notify.success(`We found ${totalHits} images`);
+        page === 1 && Notify.success(`We found ${totalHits} images`);
       } else {
         Notify.failure('There are no images by this query');
         setIsLoading(false);
