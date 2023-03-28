@@ -24,29 +24,29 @@ export default function App() {
 
   useEffect(() => {
     // setStatus(STATUS.PENDING);
-    if (query !== '') {
-      getImages(query, page)
-        .then(res => {
-          const { hits, totalHits } = res.data;
-          if (hits.length !== 0) {
-            setImages(prev => {
-              console.log(query);
-              return [...prev, ...hits];
-            });
-            setStatus(STATUS.RESOLVED);
-            setTotalHits(totalHits);
-            Notify.success(`We found ${totalHits} images`);
-          } else {
-            setStatus(STATUS.REJECTED);
-            Notify.failure('There are no images by this query');
-          }
-        })
-        .catch(error => {
+    if (query === '') return;
+
+    getImages(query, page)
+      .then(res => {
+        const { hits, totalHits } = res.data;
+        if (hits.length !== 0) {
+          setImages(prev => {
+            console.log(query);
+            return [...prev, ...hits];
+          });
+          setStatus(STATUS.RESOLVED);
+          setTotalHits(totalHits);
+          Notify.success(`We found ${totalHits} images`);
+        } else {
           setStatus(STATUS.REJECTED);
-          setError(error.message);
           Notify.failure('There are no images by this query');
-        });
-    }
+        }
+      })
+      .catch(error => {
+        setStatus(STATUS.REJECTED);
+        setError(error.message);
+        Notify.failure('There are no images by this query');
+      });
   }, [page, query]);
 
   const handleClick = e => {
