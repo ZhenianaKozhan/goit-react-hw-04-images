@@ -18,20 +18,20 @@ export default function App() {
     if (!query) return;
     setIsLoading(true);
 
-    async function foo() {
-      const res = await getImages(query, page);
-      const { hits, totalHits } = res.data;
-      if (hits.length !== 0) {
-        setImages(prev => [...prev, ...hits]);
-        setIsLoading(false);
-        setTotalHits(totalHits);
-        page === 1 && Notify.success(`We found ${totalHits} images`);
-      } else {
-        Notify.failure('There are no images by this query');
-        setIsLoading(false);
-      }
-    }
-    foo();
+    getImages(query, page)
+      .then(res => {
+        const { hits, totalHits } = res.data;
+        if (hits.length !== 0) {
+          setImages(prev => [...prev, ...hits]);
+          setTotalHits(totalHits);
+          page === 1 && Notify.success(`We found ${totalHits} images`);
+        } else {
+          Notify.failure('There are no images by this query');
+          throw new Error('There are no images by this query');
+        }
+      })
+      .catch(error => console.log(error))
+      .finally(setIsLoading(false));
   }, [page, query]);
 
   const handleClick = e => {
